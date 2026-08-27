@@ -1,0 +1,4 @@
+﻿time,direction,entry,sl,tp,score,result,bars_to_result,reasons
+2023-06-23 13:01:00,BUY,1929.7,1928.0,1933.1,3.5,WIN,14,Cấu trúc H1 có CHoCH hướng TĂNG (chưa xác nhận trên H4) | Giá đang test lại Order Block bullish_ob (1928.59-1929.78) | Price action xác nhận: bullish_rejection | M1 có break nhỏ xác nhận hướng vào lệnh (BOS)
+2023-06-30 12:30:00,BUY,1909.03,1889.15,1948.81,4.0,TIMEOUT,800,"Cấu trúc H4+H1 đồng thuận CHoCH hướng TĂNG | Giá đang test lại Order Block bullish_ob (1896.10-1910.01) | Price action xác nhận: bullish_engulfing, bullish_rejection | M1 có break nhỏ xác nhận hướng vào lệnh (CHoCH)"
+2023-07-03 12:32:00,BUY,1914.99,1913.58,1917.81,4.0,WIN,5,Cấu trúc H4+H1 đồng thuận BOS hướng TĂNG | Giá đang test lại Order Block bullish_ob (1914.82-1917.30) | Price action xác nhận: bullish_rejection | M1 có break nhỏ xác nhận hướng vào lệnh (BOS)

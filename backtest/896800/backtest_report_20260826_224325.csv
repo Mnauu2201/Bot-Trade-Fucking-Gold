@@ -1,0 +1,2 @@
+﻿time,direction,entry,sl,tp,score,result,bars_to_result,reasons
+2023-11-06 03:20:00,SELL,1987.06,2006.44,1948.29,3.5,TIMEOUT,800,"Cấu trúc H1 có CHoCH hướng GIẢM (chưa xác nhận trên H4) | Giá đang test lại Order Block bearish_ob (1987.59-2000.16) | Price action xác nhận: bearish_engulfing, bearish_rejection | M1 có break nhỏ xác nhận hướng vào lệnh (BOS)"

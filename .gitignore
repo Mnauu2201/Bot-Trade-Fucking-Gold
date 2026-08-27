@@ -1,0 +1,13 @@
+# Thư mục môi trường ảo chứa hàng nghìn file thư viện (rất nặng và không bao giờ đẩy lên Git)
+venv/
+
+# Chứa các API Key / secret token (như Groq API key). Đẩy file này lên GitHub công khai sẽ bị lộ account ngay lập tức
+.env
+
+# Các file bytecode cache tự sinh ra khi chạy Python
+__pycache__/
+
+# Các file log dữ liệu local và file nén tạm
+sentiment_log.csv
+live_signals_log.csv
+calendar_fetcher.zip

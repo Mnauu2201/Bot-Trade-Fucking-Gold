@@ -1,0 +1,4 @@
+﻿time,direction,entry,sl,tp,score,result,bars_to_result,reasons
+2023-08-10 17:05:00,SELL,1919.41,1922.64,1912.95,3.5,WIN,55,Cấu trúc H4+H1 đồng thuận BOS hướng GIẢM | Giá đang lấp Fair Value Gap (1918.60-1921.29) | Price action xác nhận: bearish_rejection | M1 có break nhỏ xác nhận hướng vào lệnh (BOS)
+2023-08-10 17:10:00,SELL,1918.65,1922.64,1910.67,3.5,TIMEOUT,800,Cấu trúc H4+H1 đồng thuận BOS hướng GIẢM | Giá đang lấp Fair Value Gap (1918.60-1921.29) | Price action xác nhận: bearish_rejection | M1 có break nhỏ xác nhận hướng vào lệnh (BOS)
+2023-08-21 12:04:00,BUY,1893.89,1888.43,1904.82,3.5,LOSS,130,Cấu trúc H1 có CHoCH hướng TĂNG (chưa xác nhận trên H4) | Giá đang test lại Order Block bullish_ob (1890.19-1893.72) | Price action xác nhận: bullish_rejection | M1 có break nhỏ xác nhận hướng vào lệnh (CHoCH)
