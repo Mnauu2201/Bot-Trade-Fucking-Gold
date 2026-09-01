@@ -11,3 +11,5 @@ __pycache__/
 sentiment_log.csv
 live_signals_log.csv
 calendar_fetcher.zip
+
+logs/

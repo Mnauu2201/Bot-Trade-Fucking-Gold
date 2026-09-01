@@ -5,6 +5,9 @@ Chạy: python main.py
 """
 
 import asyncio
+import logging
+import logging.handlers
+import os
 import time
 from datetime import datetime
 
@@ -15,6 +18,40 @@ import telegram_bot
 import sentiment_logger
 import calendar_fetcher
 import live_signal_logger
+
+
+def setup_logging() -> logging.Logger:
+    """Ghi lại TOÀN BỘ output của bot (kể cả các dòng 'Chưa đủ điều kiện entry' mà
+    trước đây chỉ print() ra console và mất luôn khi đóng terminal) vào file, theo
+    ngày, tự động dọn file cũ sau 30 ngày để không phình ổ cứng vô hạn.
+
+    Vẫn in ra console y hệt như trước — chỉ THÊM chỗ lưu, không bớt gì.
+    """
+    os.makedirs("logs", exist_ok=True)
+
+    logger = logging.getLogger("gold_bot")
+    logger.setLevel(logging.INFO)
+
+    fmt = logging.Formatter("%(message)s")
+
+    file_handler = logging.handlers.TimedRotatingFileHandler(
+        filename=os.path.join("logs", "bot.log"),
+        when="midnight",
+        backupCount=30,      # giữ 30 ngày gần nhất, tự xoá file cũ hơn
+        encoding="utf-8",
+    )
+    file_handler.suffix = "%Y-%m-%d"
+    file_handler.setFormatter(fmt)
+
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(fmt)
+
+    logger.addHandler(file_handler)
+    logger.addHandler(console_handler)
+    return logger
+
+
+logger = setup_logging()
 
 
 async def analysis_loop(mt5_conn: MT5Connector):
@@ -41,7 +78,7 @@ async def analysis_loop(mt5_conn: MT5Connector):
                     and (now - last_signal_time).total_seconds() < 900  # 15 phút
                 )
                 if not is_duplicate:
-                    print(f"[{now}] 🔔 Tín hiệu {signal['direction']} — điểm {signal['score']}")
+                    logger.info(f"[{now}] 🔔 Tín hiệu {signal['direction']} — điểm {signal['score']}")
                     # Phase 1.5: đính kèm sentiment gần nhất (chỉ tham khảo, xem
                     # telegram_bot.send_signal / sentiment_logger.py để biết lý do
                     # chưa cộng vào điểm số).
@@ -51,25 +88,26 @@ async def analysis_loop(mt5_conn: MT5Connector):
                     try:
                         upcoming_events = calendar_fetcher.get_upcoming_high_impact()
                     except Exception as e:
-                        print(f"⚠️  Lỗi lấy lịch kinh tế: {e}")
+                        logger.warning(f"⚠️  Lỗi lấy lịch kinh tế: {e}")
                         upcoming_events = []
+
                     # Ghi ra CSV TRƯỚC khi gửi Telegram: nếu gửi Telegram lỗi/timeout,
                     # tín hiệu vẫn được lưu lại trên đĩa để không mất dấu.
                     try:
                         live_signal_logger.log_signal(signal, sentiment=sentiment)
                     except Exception as e:
-                        print(f"⚠️  Lỗi ghi live_signals_log.csv: {e}")
+                        logger.warning(f"⚠️  Lỗi ghi live_signals_log.csv: {e}")
 
                     await telegram_bot.send_signal(signal, sentiment=sentiment,
                                                     upcoming_events=upcoming_events)
                     last_signal_direction = signal["direction"]
                     last_signal_time = now
             else:
-                print(f"[{datetime.now()}] Chưa đủ điều kiện entry "
-                      f"(điểm hiện tại: {analysis['score']}/4)")
+                logger.info(f"[{datetime.now()}] Chưa đủ điều kiện entry "
+                            f"(điểm hiện tại: {analysis['score']}/4)")
 
         except Exception as e:
-            print(f"❌ Lỗi trong vòng lặp phân tích: {e}")
+            logger.error(f"❌ Lỗi trong vòng lặp phân tích: {e}")
 
         await asyncio.sleep(Config.CHECK_INTERVAL_SECONDS)
 
